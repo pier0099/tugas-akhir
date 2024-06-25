@@ -74,14 +74,25 @@
       <a class="btn btn-primary btn-lg" href="#" role="button">Selengkapnya</a>
     </div>
   </div>
+
+  <!-- Routing untuk konten Kehalaman Lain -->
+  <router-view></router-view>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from 'vue'
+// import type { RouteLocationNormalizedLoaded } from 'vue-router' // Import tipe menggunakan sintaks tipe khusus
+
+interface Activity {
+  name: string
+  completed: boolean
+}
+
+export default defineComponent({
   data() {
     return {
       newActivity: '',
-      activities: [],
+      activities: [] as Activity[],
       filter: 'all'
     }
   },
@@ -92,7 +103,7 @@ export default {
         this.newActivity = ''
       }
     },
-    cancelActivity(index) {
+    cancelActivity(index: number) {
       this.activities.splice(index, 1)
     },
     showAll() {
@@ -116,9 +127,9 @@ export default {
       }
     },
     shouldShowJumbotron() {
-      // Show jumbotron if not on the root path '/'
-      return this.$route.path == '/'
+      // Show jumbotron if on the root path '/'
+      return this.$route.path === '/'
     }
   }
-}
+})
 </script>
